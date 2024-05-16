@@ -1,25 +1,21 @@
 {
     "version": 2,
     "routes": [
-      {
-        "src": "/(.*)",
-        "methods": ["GET"],
-        "dest": "/"
-      },
+      { "handle": "filesystem" },
       {
         "src": "/linktopay",
         "methods": ["POST"],
-        "dest": "/linktopay"
+        "dest": "index.js"
       },
       {
         "src": "/order",
         "methods": ["POST"],
-        "dest": "/order"
+        "dest": "index.js"
       },
       {
         "src": "/checkout",
         "methods": ["POST"],
-        "dest": "/checkout"
+        "dest": "index.js"
       }
     ]
   }
