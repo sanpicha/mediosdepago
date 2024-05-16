@@ -23,7 +23,7 @@ const agent = new https.Agent({
     rejectUnauthorized: false,
 });
 
-app.post('/linktopay', (req, res) => {
+app.post('https://mediosdepago.vercel.app/linktopay', (req, res) => {
     fetch('https://worldtimeapi.org/api/ip', { agent })
         .then(response => response.json())
         .then(data => {
@@ -58,7 +58,7 @@ app.post('/linktopay', (req, res) => {
         });
 });
 
-app.post('/order', (req, res) => {
+app.post('https://mediosdepago.vercel.app/order', (req, res) => {
     fetch('https://worldtimeapi.org/api/ip', { agent })
         .then(response => response.json())
         .then(data => {
@@ -93,7 +93,7 @@ app.post('/order', (req, res) => {
         });
 });
 
-app.post('/checkout', (req, res) => {
+app.post('https://mediosdepago.vercel.app/checkout', (req, res) => {
     fetch('https://worldtimeapi.org/api/ip', { agent })
         .then(response => response.json())
         .then(data => {
