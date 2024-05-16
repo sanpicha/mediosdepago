@@ -65,10 +65,16 @@
             },
             body: JSON.stringify(requestData)
         }).then(response => {
-            if (response.redirected) {
-                window.location.href = response.url;
+            if (response.ok) {
+                return response.json();
             }
-        }).catch(error => console.error('Error:', error));
+            throw new Error('Error al obtener la URL de pago');
+        })
+        .then(data => {
+            window.location.href = data.url; // Redirecciona a la URL recibida del servidor
+        })
+        .catch(error => console.error('Error:', error));
+    
     }
 
     function pse() {
@@ -118,11 +124,16 @@
             },
             body: JSON.stringify(requestData)
         }).then(response => {
-            if (response.redirected) {
-                window.location.href = response.url;
+            if (response.ok) {
+                return response.json();
             }
-        }).catch(error => console.error('Error:', error));
-        
+            throw new Error('Error al obtener la URL de pago');
+        })
+        .then(data => {
+            window.location.href = data.url; // Redirecciona a la URL recibida del servidor
+        })
+        .catch(error => console.error('Error:', error));
+    
     }
 
     function checkout() {

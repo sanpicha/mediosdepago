@@ -49,7 +49,8 @@ app.post('/linktopay', (req, res) => {
                 .then(response => response.json())
                 .then(result => {
                     const url = result.data.payment.payment_url;
-                    res.redirect(url);
+                    res.json({ url: url });
+                    //res.redirect(url);
                 })
                 .catch(error => console.log('error', error));
         })
@@ -84,7 +85,8 @@ app.post('/order', (req, res) => {
                 .then(response => response.json())
                 .then(result => {
                     const url = result.transaction.bank_url;
-                    res.redirect(url);
+                    res.json({ url: url });
+                    //res.redirect(url);
                 })
                 .catch(error => console.log('error', error));
         })
