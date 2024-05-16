@@ -1,1 +1,26 @@
-{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
+{
+    "version": 2,
+    "routes": [
+      {
+        "src": "/(.*)",
+        "methods": ["GET"],
+        "dest": "/"
+      },
+      {
+        "src": "/linktopay",
+        "methods": ["POST"],
+        "dest": "/linktopay"
+      },
+      {
+        "src": "/order",
+        "methods": ["POST"],
+        "dest": "/order"
+      },
+      {
+        "src": "/checkout",
+        "methods": ["POST"],
+        "dest": "/checkout"
+      }
+    ]
+  }
+  
