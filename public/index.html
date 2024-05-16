@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Methods</title>
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <header>
+           
+    </header>
+  </head>
+  <body>
+   <div class="wrapper"> 
+    <div class="navbar">
+    <ul>      
+            <li><a href="#" onclick="linkToPay()">Link to pay</a></li>
+            <li><a href="#" onclick="pse()">PSE</a></li>
+            <li><a href="#" onclick="checkout()">Checkout</a></li>
+          
+          </ul>
+    
+</div>
+</div>
+<div class="container">
+    <img class="image" src="https://cdn.paymentez.com/img/nv/nuvei_logo.png"> 
+    
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<script src="https://cdn.paymentez.com/ccapi/sdk/payment_checkout_3.0.0.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
+<script type="text/javascript">
+    function linkToPay() {
+        const requestData = {
+            user: {
+                id: "117",
+                email: "test@email.com",
+                name: "test",
+                last_name: "test lastname"
+            },
+            order: {
+                dev_reference: "123",
+                description: "PRUEBA",
+                amount: 100,
+                installments_type: 0,
+                currency: "COP"
+            },
+            configuration: {
+                partial_payment: false,
+                expiration_days: 1,
+                allowed_payment_methods: ["All"],
+                success_url: "https://paymentez.github.io/api-doc/es/#introduccion",
+                failure_url: "https://paymentez.github.io/api-doc/es/#introduccion",
+                pending_url: "https://paymentez.github.io/api-doc/es/#introduccion",
+                review_url: "https://paymentez.github.io/api-doc/es/#introduccion"
+            }
+        };
+
+        fetch('/linktopay', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        }).then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            }
+        }).catch(error => console.error('Error:', error));
+    }
+
+    function pse() {
+  
+    const requestData = {
+    "carrier":{
+      "id": "PSE",
+      "extra_params": {
+        "bank_code": "1022",
+        "response_url": "https://paymentez.github.io/api-doc/es/#introduccion",
+        "user": {
+          "name": "User full name",
+          "fiscal_number": 12312312313,
+          "type": "N",
+          "type_fis_number": "CC",
+          "ip_address": "201.0.90.12"
+        }
+      }
+    },
+    "user": {
+      "id": "sdf",
+      "email": "user@example.com",
+      "phone_number": "9878987677",
+      "address":{
+                  "street":"calle 1",
+                  "number": "10",
+                  "district": "district",
+                  "city":"Cartagena",
+                  "state":"Bolivar",
+                  "zip":"130001"
+      }
+    },
+    "order": {
+      "country": "COL",
+      "currency": "COP",
+      "dev_reference": "1",
+      "amount": 1000,
+      "vat": 0,
+      "description": "description"
+    }
+  };
+  
+  fetch('/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        }).then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            }
+        }).catch(error => console.error('Error:', error));
+        
+    }
+
+    function checkout() {
+
+const requestData = {
+   "locale":"es",
+   "order":{
+      "amount":100,
+      "description":"3DS Challenge",
+      "vat":0,
+      "dev_reference":"test",
+      "installments_type":0
+   },
+   "user":{
+      "id":"117",
+      "email": "some@email.com"
+   },
+   "conf": {
+        "style_version": "2",
+        "theme": {
+            "primary_color": "#091f2d",
+            "secondary_color": "#545454",
+            "logo": "https://paymentez.github.io/api-doc/images/logo-40bdfa79.png"
+        }
+      }
+    };
+        fetch('/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        }).then(response => {
+            if (response.ok) {
+                response.json().then(data => {
+                    const paymentCheckout = new PaymentCheckout.modal({
+
+                        env_mode: 'stg',
+                        onOpen: function () {
+                            console.log("modal open");
+                        },
+                        onClose: function () {
+                            console.log("modal closed");
+                        },
+                        onResponse: function (response) {
+                            console.log(response);
+                        }
+                    });
+                    paymentCheckout.open({
+                    reference: data.reference
+                    });
+                });
+            } else {
+                console.error('Error en la solicitud al servidor');
+            }
+        }).catch(error => console.error('Error:', error));
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "node-payment",
+  "version": "1.0.0",
+  "description": "project",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "Santiago Gomez",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "express": "^4.19.2",
+    "fetch": "^1.1.0",
+    "node-fetch": "^3.3.2",
+    "nodemon": "^3.1.0"
+  }
+}
