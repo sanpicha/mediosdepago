@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 //const fetch = require('node-fetch');
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const CryptoJS = require('crypto-js');
 const https = require('https');
 const cors = require('cors');
@@ -15,14 +15,14 @@ app.use(cors());
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-app.get('/', (req,res)=>{
+app.get('/', (req, res) => {
     res.sendFile(__dirname + 'public/index.html');
-  })
+})
 
 const agent = new https.Agent({
     rejectUnauthorized: false,
 });
-
+//link de pago
 app.post('/linktopay', (req, res) => {
     fetch('https://worldtimeapi.org/api/ip', { agent })
         .then(response => response.json())
